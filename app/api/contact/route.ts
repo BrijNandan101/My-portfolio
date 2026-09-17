@@ -16,7 +16,7 @@ export async function POST(req: NextRequest) {
 
   if (await hasRecentSubmission(parsed.data.email)) {
     return NextResponse.json(
-      { error: "You've already sent a message in the last 24 hours. Please wait before sending another." },
+      { error: "You've already sent a message in the last 6 hours. Please wait before sending another." },
       { status: 429 }
     );
   }
