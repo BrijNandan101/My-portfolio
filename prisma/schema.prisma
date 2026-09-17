@@ -1,0 +1,114 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum Role {
+  ADMIN
+}
+
+enum SkillCategory {
+  LANGUAGES
+  FRAMEWORKS
+  GENAI
+  TOOLS_CLOUD
+  FUNDAMENTALS
+}
+
+model User {
+  id           String   @id @default(cuid())
+  email        String   @unique
+  passwordHash String
+  name         String
+  role         Role     @default(ADMIN)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+}
+
+model Project {
+  id              String   @id @default(cuid())
+  title           String
+  slug            String   @unique
+  description     String
+  longDescription String?
+  techStack       String[]
+  repoUrl         String?
+  demoUrl         String?
+  imageUrl        String?
+  featured        Boolean  @default(false)
+  order           Int      @default(0)
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+}
+
+model Skill {
+  id           String        @id @default(cuid())
+  name         String
+  category     SkillCategory
+  proficiency  Int           @default(4)
+  order        Int           @default(0)
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
+}
+
+model Service {
+  id          String   @id @default(cuid())
+  title       String
+  description String
+  icon        String?
+  order       Int      @default(0)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model Experience {
+  id        String    @id @default(cuid())
+  company   String
+  role      String
+  location  String?
+  startDate DateTime
+  endDate   DateTime?
+  bullets   String[]
+  order     Int       @default(0)
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+}
+
+model Education {
+  id        String    @id @default(cuid())
+  institution String
+  degree    String
+  detail    String?
+  startDate DateTime
+  endDate   DateTime?
+  order     Int       @default(0)
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+}
+
+model ContactSubmission {
+  id        String   @id @default(cuid())
+  name      String
+  email     String
+  message   String
+  read      Boolean  @default(false)
+  createdAt DateTime @default(now())
+}
+
+model SiteSettings {
+  id               String  @id @default("singleton")
+  tagline          String  @default("Software Developer")
+  bio              String  @default("")
+  linkedinUrl      String?
+  githubUrl        String?
+  leetcodeUrl      String?
+  email            String?
+  resumeUrl        String?
+  profileImageUrl  String?
+  seoTitle         String  @default("Brij Nandan")
+  seoDescription   String  @default("Portfolio of Brij Nandan, Software Developer")
+}
