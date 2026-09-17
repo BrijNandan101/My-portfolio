@@ -2,6 +2,10 @@ import Link from "next/link";
 import { prisma } from "@/lib/prisma";
 import { LogoutButton } from "@/components/admin/LogoutButton";
 
+// Every admin page reads live data straight from the database, so none of
+// it should ever be statically prerendered at build time.
+export const dynamic = "force-dynamic";
+
 const navItems = [
   { href: "/admin", label: "Overview" },
   { href: "/admin/projects", label: "Projects" },
