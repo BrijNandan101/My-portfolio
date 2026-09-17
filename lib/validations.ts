@@ -61,6 +61,9 @@ export const siteSettingsSchema = z.object({
 
 export const contactFormSchema = z.object({
   name: z.string().min(1, "Name is required").max(200),
-  email: z.string().email("Enter a valid email"),
+  email: z
+    .string()
+    .email("Enter a valid email")
+    .transform((v) => v.trim().toLowerCase()),
   message: z.string().min(10, "Message is too short").max(5000),
 });

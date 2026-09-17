@@ -1,7 +1,9 @@
 import { prisma } from "@/lib/prisma";
 import { MessagesList } from "@/components/admin/MessagesList";
+import { cleanupOldMessages } from "@/lib/contact";
 
 export default async function MessagesAdminPage() {
+  await cleanupOldMessages();
   const messages = await prisma.contactSubmission.findMany({ orderBy: { createdAt: "desc" } });
 
   return (
